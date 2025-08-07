@@ -1,6 +1,6 @@
 {
-  "name": "change-vscode-settings-by-file",
-  "displayName": "change-vscode-settings-by-file",
+  "name": "rust-playground-accelerator",
+  "displayName": "rust-playground-accelerator",
   "description": "根据当前打开文件的不同，修改.vscode/settings.json文件内rust-analyzer的配置项",
   "version": "0.0.1",
   "engines": {
@@ -9,16 +9,15 @@
   "categories": [
     "Other"
   ],
-  "activationEvents": [],
+  "activationEvents": [
+    "workspaceContains:Cargo.toml",
+    "workspaceContains:*/Cargo.toml",
+    "workspaceContains:rust-project.json",
+    "workspaceContains:*/rust-project.json",
+    "workspaceContains:.rust-project.json",
+    "workspaceContains:*/.rust-project.json"
+  ],
   "main": "./out/extension.js",
-  "contributes": {
-    "commands": [
-      {
-        "command": "change-vscode-settings-by-file.helloWorld",
-        "title": "Hello World"
-      }
-    ]
-  },
   "scripts": {
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",
@@ -27,15 +26,85 @@
     "lint": "eslint src",
     "test": "vscode-test"
   },
+  "dependencies": {
+    "underscore": "^1.13.7"
+  },
   "devDependencies": {
-    "@types/vscode": "^1.102.0",
     "@types/mocha": "^10.0.10",
     "@types/node": "22.x",
+    "@types/underscore": "^1.13.0",
+    "@types/vscode": "^1.102.0",
     "@typescript-eslint/eslint-plugin": "^8.39.0",
     "@typescript-eslint/parser": "^8.39.0",
-    "eslint": "^9.32.0",
-    "typescript": "^5.9.2",
     "@vscode/test-cli": "^0.0.11",
-    "@vscode/test-electron": "^2.5.2"
+    "@vscode/test-electron": "^2.5.2",
+    "eslint": "^9.32.0",
+    "typescript": "^5.9.2"
+  },
+  "contributes": {
+    "commands": [{
+      "command": "rust-playground-accelerator.toggleFeatures",
+      "title": "调整可选 cargo features"
+    }],
+    "configuration": [
+      {
+        "title": "Rust Playground Features",
+        "properties": {
+          "rust-playground-accelerator.mappings": {
+            "type": "object",
+            "description": "描述 src/bin 目录下直接编译入口文件（如 demo.rs）的各类配置信息",
+            "patternProperties": {
+              "^[^/]+\\.rs$": {
+                "type": "object",
+                "required": [
+                  "features"
+                ],
+                "properties": {
+                  "features": {
+                    "type": ["array", "object"],
+                    "description": "映射 src/bin 下的直接子文件（如 demo.rs）到 cargo features，子目录文件需手动配置 [[bin]] 后生效",
+                    "anyOf": [{
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "description": "Cargo feature 名称"
+                      },
+                      "description": "必须激活的基础 cargo features"
+                    }, {
+                      "properties": {
+                        "required": {
+                          "type": "array",
+                          "description": "必须激活的基础 cargo features",
+                          "items": {
+                            "type": "string",
+                            "description": "Cargo feature 名称"
+                          }
+                        },
+                        "optional": {
+                          "type": "array",
+                          "description": "按需勾选的扩展 cargo features",
+                          "items": {
+                            "type": "string",
+                            "description": "Cargo feature 名称"
+                          }
+                        },
+                        "defaultCount4Optional": {
+                          "type": "number",
+                          "description": "在需勾选的 cargo features 中，默认生效前几个的数量（默认值 1）",
+                          "default": 1,
+                          "minimum": 0
+                        }
+                      }
+                    }]
+                  }
+                },
+                "description": "编译入口文件的配置信息，如需要激活的 features"
+              }
+            },
+            "default": {}
+          }
+        }
+      }
+    ]
   }
 }
