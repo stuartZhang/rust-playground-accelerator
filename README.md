@@ -49,7 +49,7 @@
 ### `rust-playground-accelerator.mappings`配置格式一：“精简格式”
 
 ```json
-{ // 在 .vscode/settngs.json 文件内，
+{ // 在 .vscode/settings.json 文件内，
   "rust-playground-accelerator.mappings": {
     "二进制目标文件的文件名（比如，main.rs）": {
       "features": string[] // 必填 Cargo Feature 数组
@@ -63,7 +63,7 @@
 ### `rust-playground-accelerator.mappings`配置格式二：“完整格式”
 
 ```json
-{ // 在 .vscode/settngs.json 文件内，
+{ // 在 .vscode/settings.json 文件内，
   "rust-playground-accelerator.mappings": {
     "rustc二进制目标文件文件名": {
       "features": {
@@ -114,7 +114,7 @@
 
 ### 含有互斥自定义`Features`的`Cargo Package`工程
 
-一方面，彼此互斥的自定义`Features`使得在`.vscode/settings.json`配置文件中硬编码`"rust-analyzer.cargo.features": "all"`变得不可接受；另一方面，每次调试不同编译路径上的代码都需手工修改`.vscode/settings.json`配置文件也很麻烦且易错。于是，通过引入适量的图形界面操作，`rust-playground-accelerator`插件将这个配置精修过程变得简单且有趣。
+当工程存在互斥的自定义`Features`时，硬编码`rust-analyzer.cargo.features: "all"`会导致编译冲突；而每次手工修改配置又繁琐易错 —— 插件通过图形界面简化了这一过程。
 
 ![输入图片说明](https://foruda.gitee.com/images/1754952079036848783/d6593df7_4981249.png "屏幕截图")
 
@@ -143,7 +143,7 @@
     2. 没有`required`字段意味着所有 Cargo Features 都可按需增减的。
     3. 在`rust-analyzer`插件做首次编译时，默认激活`"optional"`字段中的前两项`"feature1", "feature2"`
 
-2. 在`rust-analyzer`与`rust-playground-accelerator`插件皆成功初始化之后，@Rustacean 便可在`vscode`图形界面的右下角就看到一个崭新的状态栏按钮 ![输入图片说明](https://foruda.gitee.com/images/1755036034642149698/3d834588_4981249.png "屏幕截图")。鼠标点击此状态栏按钮，`vsocde`就会弹出可选`Features`的复选框菜单![输入图片说明](https://foruda.gitee.com/images/1755036205645695336/3eb41700_4981249.png "屏幕截图")。
+2. 在`rust-analyzer`与`rust-playground-accelerator`插件皆成功初始化之后，@Rustacean 便可在`vscode`图形界面的右下角就看到一个崭新的状态栏按钮 ![输入图片说明](https://foruda.gitee.com/images/1755036034642149698/3d834588_4981249.png "屏幕截图")。鼠标点击此状态栏按钮，`vscode`就会弹出可选`Features`的复选框菜单![输入图片说明](https://foruda.gitee.com/images/1755036205645695336/3eb41700_4981249.png "屏幕截图")。
 3. @Rustacean 对复选框菜单做勾选，再点击蓝色【确定】按钮。
 4. `rust-analyzer`就会
 
