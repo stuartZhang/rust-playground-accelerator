@@ -154,7 +154,7 @@
 ## 插件安装
 
 1. 打开 VS Code，进入「扩展」面板（快捷键 `Ctrl+Shift+X`）。
-2. 在搜索框输入 `rust-playground-accelerator`，找到插件后点击「安装」。
+2. 在搜索框输入`rust-playground-accelerator`，找到插件后点击「安装」。
 3. 安装完成后，插件会自动激活（需满足「依赖限制条件」）。
 
 ## 注意事项
@@ -163,6 +163,7 @@
 2. 暂不支持对`Cargo.toml [[bin]]`手工注册的二进制目标文件的跟踪。
 3. 不支持对`Lib - Cargo Package`工程。
 4. 若工程依赖较多，首次激活`features`时可能需要等待`rust-analyzer`重新加载（状态栏会显示进度）。
+5. 为了使`rust-playground-accelerator`插件工作得**无干扰**，添加配置项`"rust-analyzer.cargo.noDefaultFeatures": true`也是被推荐的。
 
 ## 反馈与贡献
 
