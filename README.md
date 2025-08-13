@@ -163,7 +163,15 @@
 2. 暂不支持对`Cargo.toml [[bin]]`手工注册的二进制目标文件的跟踪。
 3. 不支持对`Lib - Cargo Package`工程。
 4. 若工程依赖较多，首次激活`features`时可能需要等待`rust-analyzer`重新加载（状态栏会显示进度）。
-5. 为了使`rust-playground-accelerator`插件工作得**无干扰**，添加配置项`"rust-analyzer.cargo.noDefaultFeatures": true`也是被推荐的。
+5. 为避免与`rust-analyzer`默认行为冲突，和使插件 “无干扰” 工作，**建议额外配置：**
+
+    ```json
+    {
+      "rust-analyzer.cargo.noDefaultFeatures": true
+    }
+    ```
+
+    （在`.vscode/settings.json`中添加此配置，可让插件与`rust-analyzer`协同更稳定。）
 
 ## 反馈与贡献
 
