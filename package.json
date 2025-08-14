@@ -3,7 +3,7 @@
   "name": "rust-playground-accelerator",
   "displayName": "rust-playground-accelerator",
   "description": "根据当前打开文件的不同，修改.vscode/settings.json文件内rust-analyzer的配置项",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "engines": {
     "vscode": "^1.102.0"
   },

@@ -7,9 +7,9 @@
 
 > **名词解释**
 >
-> 1. 【二进制目标文件】是指在`Bin - Cargo Package`工程中，以编译输出二进制可执行文件为目标的，`src/main.rs`或`src/bin/*.rs`编译入口文件。严格地讲，二进制目标文件还应包括在`Cargo.toml [[bin]]`配置块内手工指定的、位于任意位置的编译入口文件。但，`rust-playground-accelerator`插件最新版还不适配兼容于这类二进制目标文件。
+> 1. 【二进制目标文件】是指在`Bin - Cargo Package`工程中，以编译输出二进制可执行文件为目标的`src/main.rs`或`src/bin/*.rs`编译入口文件。严格地讲，二进制目标文件还应包括注册于`Cargo.toml [[bin]]`配置块内任意位置编译入口文件。但，`rust-playground-accelerator`插件最新版还不适配兼容于这类二进制目标文件。
 >
-> 2. 【编译路径】是指基于`Cargo Features`组合的代码编译分支。就在`vscode`代码编辑器内的视觉感觉而言，`rust-analyzer`插件会将未开启`Cargo Features`的代码置灰，甚至不显示那些代码的语法高亮与错误提示。
+> 2. 【编译路径】是指基于`Cargo Features`组合的代码编译分支。就`vscode`代码编辑器内的视觉效果而言，`rust-analyzer`插件会将未开启`Cargo Features`的代码置灰，并且不显示那些代码的语法高亮与错误提示。
 
 从原理上讲，前者是对不同的二进制目标文件，在编译前，“裁剪”共享依赖项清单，和让`rustc`“轻装上阵”；后者是借助`vscode`开放的图形界面组件（即，复选框菜单），让 @Rustacean 有机会，在编译前，按需勾选欲开发调试的`Cargo Features`。
 
