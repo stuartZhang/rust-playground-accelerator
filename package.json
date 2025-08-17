@@ -3,7 +3,7 @@
   "name": "rust-playground-accelerator",
   "displayName": "rust-playground-accelerator",
   "description": "根据当前打开文件的不同，修改.vscode/settings.json文件内rust-analyzer的配置项",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "engines": {
     "vscode": "^1.102.0"
   },
@@ -32,12 +32,12 @@
     "test": "vscode-test"
   },
   "dependencies": {
-    "underscore": "^1.13.7"
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
+    "@types/lodash": "^4.17.20",
     "@types/mocha": "^10.0.10",
     "@types/node": "22.x",
-    "@types/underscore": "^1.13.0",
     "@types/vscode": "^1.102.0",
     "@typescript-eslint/eslint-plugin": "^8.39.0",
     "@typescript-eslint/parser": "^8.39.0",
@@ -47,10 +47,12 @@
     "typescript": "^5.9.2"
   },
   "contributes": {
-    "commands": [{
-      "command": "rust-playground-accelerator.toggleFeatures",
-      "title": "调整可选 cargo features"
-    }],
+    "commands": [
+      {
+        "command": "rust-playground-accelerator.toggleFeatures",
+        "title": "调整可选 cargo features"
+      }
+    ],
     "configuration": [
       {
         "title": "Rust Playground Features",
@@ -66,41 +68,47 @@
                 ],
                 "properties": {
                   "features": {
-                    "type": ["array", "object"],
+                    "type": [
+                      "array",
+                      "object"
+                    ],
                     "description": "映射 src/bin 下的直接子文件（如 demo.rs）到 cargo features，子目录文件需手动配置 [[bin]] 后生效",
-                    "anyOf": [{
-                      "type": "array",
-                      "items": {
-                        "type": "string",
-                        "description": "Cargo feature 名称"
+                    "anyOf": [
+                      {
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "description": "Cargo feature 名称"
+                        },
+                        "description": "必须激活的基础 cargo features"
                       },
-                      "description": "必须激活的基础 cargo features"
-                    }, {
-                      "properties": {
-                        "required": {
-                          "type": "array",
-                          "description": "必须激活的基础 cargo features",
-                          "items": {
-                            "type": "string",
-                            "description": "Cargo feature 名称"
+                      {
+                        "properties": {
+                          "required": {
+                            "type": "array",
+                            "description": "必须激活的基础 cargo features",
+                            "items": {
+                              "type": "string",
+                              "description": "Cargo feature 名称"
+                            }
+                          },
+                          "optional": {
+                            "type": "array",
+                            "description": "按需勾选的扩展 cargo features",
+                            "items": {
+                              "type": "string",
+                              "description": "Cargo feature 名称"
+                            }
+                          },
+                          "defaultCount4Optional": {
+                            "type": "number",
+                            "description": "在需勾选的 cargo features 中，默认生效前几个的数量（默认值 1）",
+                            "default": 1,
+                            "minimum": 0
                           }
-                        },
-                        "optional": {
-                          "type": "array",
-                          "description": "按需勾选的扩展 cargo features",
-                          "items": {
-                            "type": "string",
-                            "description": "Cargo feature 名称"
-                          }
-                        },
-                        "defaultCount4Optional": {
-                          "type": "number",
-                          "description": "在需勾选的 cargo features 中，默认生效前几个的数量（默认值 1）",
-                          "default": 1,
-                          "minimum": 0
                         }
                       }
-                    }]
+                    ]
                   }
                 },
                 "description": "编译入口文件的配置信息，如需要激活的 features"

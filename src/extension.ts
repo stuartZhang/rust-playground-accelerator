@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import * as _ from 'underscore'; // eslint-disable-line @typescript-eslint/naming-convention
+import * as _ from 'lodash'; // eslint-disable-line @typescript-eslint/naming-convention
 import { main as onToggleFeatures } from './onToggleFeatures';
 import { destroy as destroyChangeRaConfig } from './changeRaConfig';
 import { cacheData, main as onDidChangeActiveTextEditor} from './onDidChangeActiveTextEditor';

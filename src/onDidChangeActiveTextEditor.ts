@@ -2,7 +2,7 @@ import * as path from 'path';
 import * as vscode from 'vscode';
 import { main as changeRaConfig } from './changeRaConfig';
 
-namespace config {
+export namespace config {
   export interface Features {
     required?: string[];
     optional?: string[];
@@ -88,7 +88,7 @@ export function main(editor: vscode.TextEditor, outputChannel: vscode.OutputChan
     // 确认 rust-analyzer 插件是否有安装并激活
     const rustAnalyzerExtension = vscode.extensions.getExtension('rust-lang.rust-analyzer');
     if (!rustAnalyzerExtension || !rustAnalyzerExtension.isActive) {
-      outputChannel.appendLine('[WARN][onDidChangeActiveTextEditor]未安装 rust-analyzer 插件。rust-playground-accelerator 不能正常地运行');
+      outputChannel.appendLine('[WARN][onDidChangeActiveTextEditor]尚未安装或激活 rust-analyzer 插件。rust-playground-accelerator 暂不能正常运行。请稍后再试！');
       return;
     }
     // 读取插件配置表

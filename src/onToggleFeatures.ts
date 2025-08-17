@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
+import * as _ from 'lodash';
 import { main as changeRaConfig } from './changeRaConfig';
-import { cache, cacheData } from './onDidChangeActiveTextEditor';
+import { cache, cacheData, config } from './onDidChangeActiveTextEditor';
 
 export async function main(localFileRelPath: string, cachedFeatures: cache.Features, outputChannel: vscode.OutputChannel) {
     // 3. 弹出多选列表（canPickMany: true 允许选择多个）
@@ -21,4 +22,15 @@ export async function main(localFileRelPath: string, cachedFeatures: cache.Featu
     outputChannel.appendLine(`[INFO][onToggleFeatures]为 ${localFileRelPath} 调整后的 cargo features 有 ${raFeatures.join()}`);
     // 5. 更新 rust-analyzer 配置（示例：合并到现有 features 中）
     await changeRaConfig(localFileRelPath, raFeatures/* 实际可能需要与现有 features 合并 */, outputChannel);
+    // 6. 持久化保存最新的 cargo features 选择结果
+    const config4Rpf: vscode.WorkspaceConfiguration = vscode.workspace.getConfiguration('rust-playground-accelerator');
+    const mappings: config.Mappings | undefined = _.cloneDeep(config4Rpf.get('mappings'));
+    const features: config.Features | string[] | undefined = mappings?.[localFileRelPath]?.features;
+    if (typeof features === 'object' && !Array.isArray(features)) {
+      features.defaultCount4Optional = cachedFeatures.optionalActive.length;
+      if (features.optional) {
+        features.optional = cachedFeatures.optionalActive.concat(features.optional.filter(feature => !cachedFeatures.optionalActive.includes(feature)));
+      }
+      await config4Rpf.update('mappings', mappings);
+    }
 }
