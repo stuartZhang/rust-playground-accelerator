@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import * as _ from 'lodash';
+import * as _ from 'lodash'; // eslint-disable-line @typescript-eslint/naming-convention
 import { main as changeRaConfig } from './changeRaConfig';
 import { cache, cacheData, config } from './onDidChangeActiveTextEditor';
 
